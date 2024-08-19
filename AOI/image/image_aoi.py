@@ -16,6 +16,10 @@ class image (methods_parent) :
         # Create the component mask
         self.mask = mask(name, self.create_component_mask())
 
+        # Process the component mask
+        self.mask.morphology("erode", strength=2)
+        self.mask.morphology("dilate")
+
     
     def create_component_mask (self) :
         """ Create a component mask from the class image """
