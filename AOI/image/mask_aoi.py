@@ -5,4 +5,4 @@ class mask (methods_parent) :
     """ Class for managing masks """
 
     def __init__ (self, name, image):
-        super().__init__(name, image)
+        super().__init__(f"{name}-mask", image)

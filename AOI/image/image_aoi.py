@@ -1,4 +1,5 @@
 from .methods import methods_parent
+from .mask_aoi import mask
 import cv2
 import numpy as np
 
@@ -6,16 +7,20 @@ class image (methods_parent) :
     """ Class for managing images """
 
     def __init__ (self, name, image):
-        super().__init__(name, image)
+        super().__init__(f"{name}-image", image)
 
-        self.hsv_image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        # Denoise the image ready to make the component mask
+        self.denoised_image = cv2.fastNlMeansDenoisingColored(image,None,10,10,7,21)
+        self.hsv_image = cv2.cvtColor(self.denoised_image, cv2.COLOR_BGR2HSV)
 
-        self.component_mask = self.create_component_mask()
+        # Create the component mask
+        self.mask = mask(name, self.create_component_mask())
 
     
     def create_component_mask (self) :
         """ Create a component mask from the class image """
 
+        # High and low hsv values
         Filters = [[(40,79,0),(179,255,255)],[(27,82,14),(84,255,191)],[(36,61,35),(91,255,156)],[(22,77,0),(87,255,186)]]
 
         new_mask = np.zeros((self.height, self.width), np.uint8)
@@ -27,8 +32,6 @@ class image (methods_parent) :
 
         # Invert the new mask
         new_mask = (255-new_mask)
-
-        cv2.imshow(f"{self.name}-mask", new_mask)
 
         return new_mask
 

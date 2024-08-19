@@ -14,8 +14,9 @@ pattern = [
 
 if __name__ == "__main__" :
 
-    pcb0 = pcb("pcb0", pattern)
+    pcb0 = pcb("pi_pcb0", pattern)
 
     pcb0.pcb.show(1)
+    pcb0.pcb.mask.show(1)
 
     cv2.waitKey(0)
