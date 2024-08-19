@@ -17,7 +17,7 @@ class image (methods_parent) :
         self.mask = mask(name, self.create_component_mask())
 
         # Process the component mask
-        self.mask.morphology("erode", strength=2)
+        #self.mask.morphology("erode", strength=2)
         self.mask.morphology("dilate")
 
     
