@@ -21,5 +21,28 @@ class mask (methods_parent) :
 
         else:
             raise ValueError(f"Unknown morphology type : {morph}")
+        
+
+    def get_mask_objects (self) :
+        """ Find all the objects on a mask """
+
+        # Find contours in the image
+        contours, hierarchy = cv2.findContours(self.image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        object_coordinates = []
+
+        for contour in contours:
+            # Get the bounding box coordinates
+            x, y, w, h = cv2.boundingRect(contour)
+
+            object_coordinate = [
+                (x,y),
+                (x+w,y+h)
+                ]
+            
+            object_coordinates.append(object_coordinate)
+
+        return object_coordinates
+
 
         

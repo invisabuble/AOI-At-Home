@@ -38,5 +38,12 @@ class compare (object) :
         self.comparison.morphology("erode", strength=5)
         self.comparison.morphology("dilate", strength=5)
 
-        # Get contours from the differences, then coordinates from the contours
+        # Get any objects in the mask
+        object_coordinates = self.comparison.get_mask_objects()
+
+        if any(object_coordinates) :
+            print(f"Found {len(object_coordinates)} defects in {test_board.name}.")
+            test_board.pcb.draw_rectangle(object_coordinates, "DEFECTS")
+
+
         

@@ -38,4 +38,17 @@ class image (methods_parent) :
         new_mask = (255-new_mask)
 
         return new_mask
+    
+
+    def draw_rectangle (self, coordinates, message = "objects") :
+        """ Draw a rectangle on a copy of the image """
+
+        # Create a copy of the image
+        image_copy = self.image.copy()
+
+        # Iterate through the coordinates and draw the rectangles
+        for pair in coordinates:
+            cv2.rectangle(image_copy, *pair, (255, 0, 255), 2)
+
+        cv2.imshow(f"{self.name}-{message}", image_copy)
 
